@@ -1,4 +1,5 @@
-import { ContenedorFormulari } from "../ContenedorFormulari/ContenedorFormulari_styled";
+import React from "react";
+import FetMida from "../FetMida.jsx/FetMida";
 
 const Panell = ({ paginas, idiomas, setPaginas, setIdiomas }) => {
   const incrementarPaginas = () => {
@@ -22,38 +23,25 @@ const Panell = ({ paginas, idiomas, setPaginas, setIdiomas }) => {
   };
 
   return (
-    <ContenedorFormulari>
+    <div>
       <div>
         <label htmlFor="paginas">Número de páginas</label>
-        <div>
-          <button onClick={incrementarPaginas}>+</button>
-          <input
-            id="paginas"
-            type="text"
-            min="0"
-            value={paginas}
-            onChange={(event) => setPaginas(event.target.value)}
-          />
-          <button onClick={decrementarPaginas}>-</button>
-        </div>
+        <FetMida
+          value={paginas}
+          onIncrement={incrementarPaginas}
+          onDecrement={decrementarPaginas}
+        />
       </div>
       <br />
       <div>
         <label htmlFor="idiomas">Número de idiomas</label>
-
-        <div>
-          <button onClick={incrementarIdiomas}>+</button>
-          <input
-            id="idiomas"
-            type="text"
-            min="0"
-            value={idiomas}
-            onChange={(event) => setIdiomas(event.target.value)}
-          />
-          <button onClick={decrementarIdiomas}>-</button>
-        </div>
+        <FetMida
+          value={idiomas}
+          onIncrement={incrementarIdiomas}
+          onDecrement={decrementarIdiomas}
+        />
       </div>
-    </ContenedorFormulari>
+    </div>
   );
 };
 
