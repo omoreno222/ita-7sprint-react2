@@ -3,7 +3,7 @@ import { ContenedorFormulari } from "../ContenedorFormulari/ContenedorFormulari_
 const Panell = ({ paginas, idiomas, setPaginas, setIdiomas }) => (
   <ContenedorFormulari>
     <div>
-      <label htmlFor="paginas">Número de págines</label>
+      <label htmlFor="paginas">Número de páginas</label>
       <div>
         <input
           id="páginas"
@@ -14,6 +14,7 @@ const Panell = ({ paginas, idiomas, setPaginas, setIdiomas }) => (
         />
       </div>
     </div>
+    <br />
     <div>
       <label htmlFor="idiomas">Número de idiomas</label>
       <div>

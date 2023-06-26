@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Panell from "../Panell/Panell";
+import PanellEstilos from "../Panell/Panell_styled";
 import { ContenedorFormulari } from "../ContenedorFormulari/ContenedorFormulari_styled";
 
 const Formulario = () => {
@@ -41,12 +42,14 @@ const Formulario = () => {
           Una página web (500€)
         </label>
         {mostrarPanell && (
-          <Panell
-            paginas={nPaginas}
-            idiomas={nIdiomas}
-            setPaginas={setNPaginas}
-            setIdiomas={setNIdiomas}
-          />
+          <PanellEstilos>
+            <Panell
+              paginas={nPaginas}
+              idiomas={nIdiomas}
+              setPaginas={setNPaginas}
+              setIdiomas={setNIdiomas}
+            />
+          </PanellEstilos>
         )}
         <br />
         <label>
