@@ -1,18 +1,35 @@
 import React, { useState } from "react";
+import Panell from "../Panell/Panell";
 import { ContenedorFormulari } from "../ContenedorFormulari/ContenedorFormulari_styled";
 
 const Formulario = () => {
-  const [precioFinal, setprecioFinal] = useState(0);
+  const [precioFinal, setPrecioFinal] = useState(0);
+  const [mostrarPanell, setMostrarPanell] = useState(false);
+  const [nPaginas, setNPaginas] = useState(0);
+  const [nIdiomas, setNIdiomas] = useState(0);
 
   const seleccionCasilla = (event) => {
     const valorCasilla = parseInt(event.target.value);
     const afirmativoSeleccionada = event.target.checked;
 
     if (afirmativoSeleccionada) {
-      setprecioFinal((prevPrecio) => prevPrecio + valorCasilla);
+      setPrecioFinal((prevPrecio) => prevPrecio + valorCasilla);
+      if (valorCasilla === 500) {
+        setMostrarPanell(true);
+      }
     } else {
-      setprecioFinal((prevPrecio) => prevPrecio - valorCasilla);
+      setPrecioFinal((prevPrecio) => prevPrecio - valorCasilla);
+      if (valorCasilla === 500) {
+        setMostrarPanell(false);
+        setNPaginas(0);
+        setNIdiomas(0);
+      }
     }
+  };
+
+  const costesWeb = () => {
+    const precioWeb = nPaginas * nIdiomas * 30;
+    setPrecioFinal((prevPrecio) => prevPrecio + precioWeb);
   };
 
   return (
@@ -23,6 +40,14 @@ const Formulario = () => {
           <input type="checkbox" value={500} onChange={seleccionCasilla} />
           Una página web (500€)
         </label>
+        {mostrarPanell && (
+          <Panell
+            paginas={nPaginas}
+            idiomas={nIdiomas}
+            setPaginas={setNPaginas}
+            setIdiomas={setNIdiomas}
+          />
+        )}
         <br />
         <label>
           <input type="checkbox" value={300} onChange={seleccionCasilla} />
@@ -34,7 +59,7 @@ const Formulario = () => {
           Una campaña de Google Ads (200€)
         </label>
         <br />
-        <p>Precio: {precioFinal}€</p>
+        <p>Precio: {precioFinal + nPaginas * nIdiomas * 30}€</p>
       </div>
     </ContenedorFormulari>
   );
