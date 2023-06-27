@@ -1,25 +1,13 @@
 import React from "react";
 import FetMida from "../FetMida.jsx/FetMida";
 
-const Panell = ({ paginas, idiomas, setPaginas, setIdiomas }) => {
-  const incrementarPaginas = () => {
-    setPaginas(parseInt(paginas) + 1);
+const Panell = ({ paginas, idiomas, onPaginasChange, onIdiomasChange }) => {
+  const handlePaginasChange = (newValue) => {
+    onPaginasChange(newValue);
   };
 
-  const decrementarPaginas = () => {
-    if (paginas > 0) {
-      setPaginas(parseInt(paginas) - 1);
-    }
-  };
-
-  const incrementarIdiomas = () => {
-    setIdiomas(parseInt(idiomas) + 1);
-  };
-
-  const decrementarIdiomas = () => {
-    if (idiomas > 0) {
-      setIdiomas(parseInt(idiomas) - 1);
-    }
+  const handleIdiomasChange = (newValue) => {
+    onIdiomasChange(newValue);
   };
 
   return (
@@ -28,8 +16,9 @@ const Panell = ({ paginas, idiomas, setPaginas, setIdiomas }) => {
         <label htmlFor="paginas">Número de páginas</label>
         <FetMida
           value={paginas}
-          onIncrement={incrementarPaginas}
-          onDecrement={decrementarPaginas}
+          onIncrement={() => onPaginasChange(paginas + 1)}
+          onDecrement={() => onPaginasChange(paginas - 1)}
+          onChange={handlePaginasChange}
         />
       </div>
       <br />
@@ -37,8 +26,9 @@ const Panell = ({ paginas, idiomas, setPaginas, setIdiomas }) => {
         <label htmlFor="idiomas">Número de idiomas</label>
         <FetMida
           value={idiomas}
-          onIncrement={incrementarIdiomas}
-          onDecrement={decrementarIdiomas}
+          onIncrement={() => onIdiomasChange(idiomas + 1)}
+          onDecrement={() => onIdiomasChange(idiomas - 1)}
+          onChange={handleIdiomasChange}
         />
       </div>
     </div>
