@@ -9,11 +9,17 @@ const FetMida = ({ value, onIncrement, onDecrement, onChange }) => {
     }
   };
 
+  const handleDecrement = () => {
+    if (value > 0) {
+      onDecrement();
+    }
+  };
+
   return (
     <FetMidaEstilos>
       <button onClick={onIncrement}>+</button>
       <input type="text" min="0" value={value} onChange={handleChange} />
-      <button onClick={onDecrement}>-</button>
+      <button onClick={handleDecrement}>-</button>
     </FetMidaEstilos>
   );
 };
