@@ -1,12 +1,7 @@
 import "./App.css";
-import Formulario from "./Componentes/Formulari/Formulari";
 
-function App() {
-  return (
-    <div className="App">
-      <Formulario />
-    </div>
-  );
-}
+import Routes from "./application/routes";
+
+const App = () => <Routes />;
 
 export default App;
