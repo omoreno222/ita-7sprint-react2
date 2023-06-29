@@ -29,6 +29,7 @@ const ModalClose = styled.button`
   cursor: pointer;
   margin-top: 10px;
   width: fit-content;
+  display: inline-block;
 
   &:hover {
     background-color: #999;

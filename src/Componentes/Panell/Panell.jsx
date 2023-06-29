@@ -16,6 +16,7 @@ const Panell = ({ paginas, idiomas, onPaginasChange, onIdiomasChange }) => {
         <label htmlFor="paginas">Número de páginas</label>
         <FetMida
           value={paginas}
+          tipo={"páginas"}
           onIncrement={() => onPaginasChange(paginas + 1)}
           onDecrement={() => onPaginasChange(paginas - 1)}
           onChange={handlePaginasChange}
@@ -26,6 +27,7 @@ const Panell = ({ paginas, idiomas, onPaginasChange, onIdiomasChange }) => {
         <label htmlFor="idiomas">Número de idiomas</label>
         <FetMida
           value={idiomas}
+          tipo={"idiomas"}
           onIncrement={() => onIdiomasChange(idiomas + 1)}
           onDecrement={() => onIdiomasChange(idiomas - 1)}
           onChange={handleIdiomasChange}

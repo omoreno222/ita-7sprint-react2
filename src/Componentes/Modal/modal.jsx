@@ -5,7 +5,7 @@ import {
   ModalClose,
 } from "../Modal/modal_styled";
 
-const Modal = ({ onClose, totalPages, totalLanguages }) => {
+const Modal = ({ onClose, totalPages, tipo }) => {
   const handleModalClick = (event) => {
     event.stopPropagation();
   };
@@ -27,21 +27,25 @@ const Modal = ({ onClose, totalPages, totalLanguages }) => {
         </p>
         <ul>
           <li>
-            Número de páginas (según su selección actual):{" "}
-            <span>{totalPages}</span> <span>páginas.</span>
+            Número de <span>{tipo}</span> (según su selección actual):{" "}
+            <strong>
+              <span>{totalPages}</span> <span>{tipo}</span>
+            </strong>
           </li>
           <li>
-            Precio por página: <span>30 Euros.</span>
+            Precio por cada unidad de <span>{tipo}</span>:{" "}
+            <strong>
+              <span>30 Euros.</span>
+            </strong>
           </li>
           <li>
             Total a pagar (según su selección actual):{" "}
             <strong>
-              <span>{totalPayment}</span>
-            </strong>{" "}
-            <span>Euros.</span>
+              <span>{totalPayment}</span> <span>Euros.</span>
+            </strong>
           </li>
         </ul>
-        <ModalClose onClick={onClose}>Volver</ModalClose>
+        <br />
       </ModalContent>
     </ModalBackground>
   );

@@ -4,7 +4,7 @@ import { AiFillInfoCircle } from "react-icons/ai";
 import FetMidaEstilos from "./FetMida_styled";
 import Modal from "../Modal/modal";
 
-const FetMida = ({ value, onIncrement, onDecrement, onChange }) => {
+const FetMida = ({ value, onIncrement, onDecrement, onChange, tipo }) => {
   const [showModal, setShowModal] = useState(false);
 
   const toggleModal = () => {
@@ -30,7 +30,9 @@ const FetMida = ({ value, onIncrement, onDecrement, onChange }) => {
       <input type="text" min="0" value={value} onChange={handleChange} />
       <button onClick={handleDecrement}>-</button>
       <AiFillInfoCircle className="info-icon" onClick={toggleModal} />
-      {showModal && <Modal onClose={toggleModal} totalPages={value} />}
+      {showModal && (
+        <Modal onClose={toggleModal} totalPages={value} tipo={tipo} />
+      )}
     </FetMidaEstilos>
   );
 };
