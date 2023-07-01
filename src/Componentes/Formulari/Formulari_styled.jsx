@@ -24,11 +24,11 @@ export const ContenedorFormulari = styled.div`
 
 export const ContenedorColumnas = styled.div`
   display: flex;
-  gap: 2rem;
+  gap: 0.5rem;
 `;
 
 export const Columna1 = styled.div`
-  max-height: 80vh;
+  max-height: 72vh;
   padding: 1rem;
   background-color: #e8eaed;
   border-radius: 0.4rem;
@@ -36,7 +36,7 @@ export const Columna1 = styled.div`
 `;
 
 export const Columna2 = styled.div`
-  max-height: 80vh;
+  max-height: 72vh;
   padding: 1rem;
   background-color: #e8eaed;
   border-radius: 0.4rem;
@@ -48,7 +48,7 @@ export const Columna2 = styled.div`
 export const Scroll = styled.div`
   border: solid black 1px;
   border-radius: 0.4rem;
-  background-color: #ffe3c2;
+  background-color: #f4f5f6;
   height: 80%;
   overflow-y: auto;
   overflow-x: hidden;
@@ -72,10 +72,18 @@ export const Scroll = styled.div`
 
   p {
     margin: 0.1rem;
+    font-size: 0.7rem;
   }
 
   li {
     margin-bottom: 0.8rem;
     border-bottom: solid 1px black;
+  }
+
+  .idTop {
+    color: blue;
+    background-color: orange;
+    width: 20rem;
+    text-align: center;
   }
 `;

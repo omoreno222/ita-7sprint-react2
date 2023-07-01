@@ -122,6 +122,7 @@ const Formulario = () => {
   });
 
   const [budgetBook, setBudgetBook] = useState([]);
+  const [originalBudgetBook, setOriginalBudgetBook] = useState([]);
 
   const handleGuardarPresupuesto = () => {
     const precioTotal = precioFinal + nPaginas * nIdiomas * 30;
@@ -139,6 +140,11 @@ const Formulario = () => {
       opcionesSeleccionadas.push("Una campaña de Google Ads");
     }
 
+    const newBudgetBook = [...budgetBook];
+    setBudgetBook(newBudgetBook);
+
+    setOriginalBudgetBook(newBudgetBook);
+
     const nuevoPresupuesto = {
       id: new Date().toISOString(),
       refPedido: orderRef,
@@ -150,6 +156,43 @@ const Formulario = () => {
     };
 
     setBudgetBook([...budgetBook, nuevoPresupuesto]);
+  };
+
+  const [ordenAlfabetico, setOrdenAlfabetico] = useState(false);
+
+  const handleOrdenAlfabetico = () => {
+    const ordenado = [...budgetBook].sort((a, b) => {
+      if (a.refPedido < b.refPedido) {
+        return ordenAlfabetico ? 1 : -1;
+      }
+      if (a.refPedido > b.refPedido) {
+        return ordenAlfabetico ? -1 : 1;
+      }
+      return 0;
+    });
+
+    setOrdenAlfabetico(!ordenAlfabetico);
+
+    setBudgetBook(ordenado);
+  };
+
+  const [ordenFecha, setOrdenFecha] = useState(false);
+
+  const handleOrdenFecha = () => {
+    const ordenado = [...budgetBook].sort((a, b) => {
+      if (ordenFecha) {
+        return new Date(b.id) - new Date(a.id);
+      } else {
+        return new Date(a.id) - new Date(b.id);
+      }
+    });
+
+    setOrdenFecha(!ordenFecha);
+    setBudgetBook(ordenado);
+  };
+
+  const handleReiniciar = () => {
+    setBudgetBook(originalBudgetBook);
   };
 
   return (
@@ -220,16 +263,21 @@ const Formulario = () => {
           <p>Precio: {precioFinal + nPaginas * nIdiomas * 30}€</p>
           <br />
           <button onClick={handleGuardarPresupuesto}>
-            <strong>Guardar Presupuesto</strong>
+            Guardar Presupuesto
           </button>
         </Columna1>
         <Columna2>
+          <button onClick={handleOrdenAlfabetico}>
+            Ordenar alfabéticamente
+          </button>
+          <button onClick={handleOrdenFecha}>Ordenar por fecha</button>
+          <button onClick={handleReiniciar}>Reiniciar</button>
           <h3>Lista de pedidos</h3>
           <Scroll>
             <ul>
               {budgetBook.map((presupuesto) => (
                 <li key={presupuesto.id}>
-                  <p>Identificador: {presupuesto.id}</p>
+                  <p className="idTop">Fecha: {presupuesto.id}</p>
                   <p>Ref. Pedido: {presupuesto.refPedido}</p>
                   <p>Cliente: {presupuesto.cliente}</p>
                   <p>
