@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Panell from "../Panell/Panell";
-import { ContenedorFormulari } from "../ContenedorFormulari/ContenedorFormulari_styled";
+import {
+  ContenedorFormulari,
+  ContenedorColumnas,
+  Columna1,
+  Columna2,
+  Scroll,
+} from "./Formulari_styled";
 
 const Formulario = () => {
   const [precioFinal, setPrecioFinal] = useState(() => {
@@ -35,6 +41,23 @@ const Formulario = () => {
     }
     return 0;
   });
+  const [clientName, setClientName] = useState(() => {
+    const datosGuardados = localStorage.getItem("datos");
+    if (datosGuardados) {
+      const datos = JSON.parse(datosGuardados);
+      return datos.clientName;
+    }
+    return 0;
+  });
+
+  const [orderRef, setOrderRef] = useState(() => {
+    const datosGuardados = localStorage.getItem("datos");
+    if (datosGuardados) {
+      const datos = JSON.parse(datosGuardados);
+      return datos.orderRef;
+    }
+    return 0;
+  });
 
   useEffect(() => {
     const datosLocalStorage = {
@@ -42,6 +65,8 @@ const Formulario = () => {
       mostrarPanell,
       nPaginas,
       nIdiomas,
+      clientName,
+      orderRef,
     };
     localStorage.setItem("datos", JSON.stringify(datosLocalStorage));
   }, [precioFinal, mostrarPanell, nPaginas, nIdiomas]);
@@ -96,48 +121,132 @@ const Formulario = () => {
     guardarCheckboxes();
   });
 
+  const [budgetBook, setBudgetBook] = useState([]);
+
+  const handleGuardarPresupuesto = () => {
+    const precioTotal = precioFinal + nPaginas * nIdiomas * 30;
+    const opcionesSeleccionadas = [];
+
+    if (document.getElementById("checkbox1").checked) {
+      opcionesSeleccionadas.push("Una página web");
+    }
+
+    if (document.getElementById("checkbox2").checked) {
+      opcionesSeleccionadas.push("Una consultoría SEO");
+    }
+
+    if (document.getElementById("checkbox3").checked) {
+      opcionesSeleccionadas.push("Una campaña de Google Ads");
+    }
+
+    const nuevoPresupuesto = {
+      id: new Date().toISOString(),
+      refPedido: orderRef,
+      cliente: clientName,
+      numPags: nPaginas,
+      numIdioms: nIdiomas,
+      precioTotal,
+      opcionesSeleccionadas,
+    };
+
+    setBudgetBook([...budgetBook, nuevoPresupuesto]);
+  };
+
   return (
     <ContenedorFormulari>
-      <p>¿Qué quieres hacer?</p>
-      <label>
-        <input
-          id="checkbox1"
-          type="checkbox"
-          value={500}
-          onChange={seleccionCasilla}
-        />
-        Una página web (500€)
-      </label>
-      {mostrarPanell && (
-        <Panell
-          paginas={nPaginas}
-          idiomas={nIdiomas}
-          onPaginasChange={handlePaginasChange}
-          onIdiomasChange={handleIdiomasChange}
-        />
-      )}
-      <br />
-      <label>
-        <input
-          id="checkbox2"
-          type="checkbox"
-          value={300}
-          onChange={seleccionCasilla}
-        />
-        Una consultoría SEO (300€)
-      </label>
-      <br />
-      <label>
-        <input
-          id="checkbox3"
-          type="checkbox"
-          value={200}
-          onChange={seleccionCasilla}
-        />
-        Una campaña de Google Ads (200€)
-      </label>
-      <br />
-      <p>Precio: {precioFinal + nPaginas * nIdiomas * 30}€</p>
+      <h1>Bienvenido al self service de presupuestos</h1>
+      <ContenedorColumnas>
+        <Columna1>
+          <label htmlFor="clientName">
+            Por favor, introduce tu nombre y apellidos:
+          </label>
+          <br />
+          <input
+            type="text"
+            value={clientName}
+            onChange={(e) => setClientName(e.target.value)}
+          />
+          <br />
+          <label htmlFor="orderRef">
+            <br />
+            Por favor, introduce el nombre de tu pedido:
+          </label>
+          <br />
+          <input
+            type="text"
+            value={orderRef}
+            onChange={(e) => setOrderRef(e.target.value)}
+          />
+          <br />
+          <h3>¿Qué quieres hacer?</h3>
+          <label>
+            <input
+              id="checkbox1"
+              type="checkbox"
+              value={500}
+              onChange={seleccionCasilla}
+            />
+            Una página web (500€)
+          </label>
+          {mostrarPanell && (
+            <Panell
+              paginas={nPaginas}
+              idiomas={nIdiomas}
+              onPaginasChange={handlePaginasChange}
+              onIdiomasChange={handleIdiomasChange}
+            />
+          )}
+          <br />
+          <label>
+            <input
+              id="checkbox2"
+              type="checkbox"
+              value={300}
+              onChange={seleccionCasilla}
+            />
+            Una consultoría SEO (300€)
+          </label>
+          <br />
+          <label>
+            <input
+              id="checkbox3"
+              type="checkbox"
+              value={200}
+              onChange={seleccionCasilla}
+            />
+            Una campaña de Google Ads (200€)
+          </label>
+          <br />
+          <p>Precio: {precioFinal + nPaginas * nIdiomas * 30}€</p>
+          <br />
+          <button onClick={handleGuardarPresupuesto}>
+            <strong>Guardar Presupuesto</strong>
+          </button>
+        </Columna1>
+        <Columna2>
+          <h3>Lista de pedidos</h3>
+          <Scroll>
+            <ul>
+              {budgetBook.map((presupuesto) => (
+                <li key={presupuesto.id}>
+                  <p>Identificador: {presupuesto.id}</p>
+                  <p>Ref. Pedido: {presupuesto.refPedido}</p>
+                  <p>Cliente: {presupuesto.cliente}</p>
+                  <p>
+                    Opciones seleccionadas:{" "}
+                    {presupuesto.opcionesSeleccionadas.join(", ")}
+                  </p>
+                  <p>Número de páginas: {presupuesto.numPags}</p>
+                  <p>Número de idiomas: {presupuesto.numIdioms}</p>
+                  <strong>
+                    <p>Precio total: {presupuesto.precioTotal}€</p>
+                  </strong>
+                </li>
+              ))}
+            </ul>
+          </Scroll>
+        </Columna2>
+      </ContenedorColumnas>
     </ContenedorFormulari>
   );
 };
