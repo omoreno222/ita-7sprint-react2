@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Panell from "../Panell/Panell";
 import {
   ContenedorFormulari,
@@ -169,6 +170,9 @@ const Formulario = () => {
 
     setBudgetBook(newBudgetBook);
     setOriginalBudgetBook(newBudgetBook);
+
+    searchParams.set("budgetBook", JSON.stringify(budgetBook));
+    navigate(`?${searchParams.toString()}`);
   };
 
   useEffect(() => {
@@ -237,6 +241,55 @@ const Formulario = () => {
   const handleBusquedaChange = (event) => {
     setBusqueda(event.target.value);
   };
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams();
+    queryParams.set("precioFinal", precioFinal);
+    queryParams.set("mostrarPanell", mostrarPanell);
+    queryParams.set("nPaginas", nPaginas);
+    queryParams.set("nIdiomas", nIdiomas);
+    queryParams.set("clientName", clientName);
+    queryParams.set("orderRef", orderRef);
+
+    navigate(`?${queryParams.toString()}`);
+  }, [
+    precioFinal,
+    mostrarPanell,
+    nPaginas,
+    nIdiomas,
+    clientName,
+    orderRef,
+    navigate,
+  ]);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    const precioFinalParam = searchParams.get("precioFinal");
+    const mostrarPanellParam = searchParams.get("mostrarPanell");
+    const nPaginasParam = searchParams.get("nPaginas");
+    const nIdiomasParam = searchParams.get("nIdiomas");
+    const clientNameParam = searchParams.get("clientName");
+    const orderRefParam = searchParams.get("orderRef");
+
+    // Actualiza las vars de estado con los valores de la cadena de consulta
+    setPrecioFinal(Number(precioFinalParam));
+    setMostrarPanell(Boolean(mostrarPanellParam));
+    setNPaginas(Number(nPaginasParam));
+    setNIdiomas(Number(nIdiomasParam));
+    setClientName(clientNameParam);
+    setOrderRef(orderRefParam);
+  }, [
+    searchParams,
+    setPrecioFinal,
+    setMostrarPanell,
+    setNPaginas,
+    setNIdiomas,
+    setClientName,
+    setOrderRef,
+  ]);
 
   return (
     <ContenedorFormulari>
