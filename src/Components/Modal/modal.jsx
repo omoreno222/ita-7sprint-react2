@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  ModalBackground,
-  ModalContent,
-  ModalClose,
-} from "../Modal/modal_styled";
+import { ModalBackground, ModalContent, ModalClose } from "./modal_styled";
 
 const Modal = ({ onClose, totalPages, tipo }) => {
   const handleModalClick = (event) => {
