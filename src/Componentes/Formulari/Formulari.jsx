@@ -141,9 +141,6 @@ const Formulario = () => {
     }
 
     const newBudgetBook = [...budgetBook];
-    setBudgetBook(newBudgetBook);
-
-    setOriginalBudgetBook(newBudgetBook);
 
     const nuevoPresupuesto = {
       id: new Date().toISOString(),
@@ -155,7 +152,10 @@ const Formulario = () => {
       opcionesSeleccionadas,
     };
 
-    setBudgetBook([...budgetBook, nuevoPresupuesto]);
+    newBudgetBook.push(nuevoPresupuesto);
+
+    setBudgetBook(newBudgetBook);
+    setOriginalBudgetBook(newBudgetBook);
   };
 
   const [ordenAlfabetico, setOrdenAlfabetico] = useState(false);
@@ -193,6 +193,25 @@ const Formulario = () => {
 
   const handleReiniciar = () => {
     setBudgetBook(originalBudgetBook);
+    setBusqueda("");
+  };
+
+  const [busqueda, setBusqueda] = useState("");
+
+  const handleBuscar = () => {
+    const resultados = originalBudgetBook.filter((presupuesto) => {
+      return (
+        presupuesto.refPedido.includes(busqueda) ||
+        presupuesto.cliente.includes(busqueda) ||
+        presupuesto.opcionesSeleccionadas.includes(busqueda)
+      );
+    });
+
+    setBudgetBook(resultados);
+  };
+
+  const handleBusquedaChange = (event) => {
+    setBusqueda(event.target.value);
   };
 
   return (
@@ -272,6 +291,13 @@ const Formulario = () => {
           </button>
           <button onClick={handleOrdenFecha}>Ordenar por fecha</button>
           <button onClick={handleReiniciar}>Reiniciar</button>
+          <input
+            type="text"
+            value={busqueda}
+            onChange={handleBusquedaChange}
+            placeholder="Buscar"
+          />
+          <button onClick={handleBuscar}>Buscar</button>
           <h3>Lista de pedidos</h3>
           <Scroll>
             <ul>

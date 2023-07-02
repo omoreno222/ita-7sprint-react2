@@ -11,7 +11,7 @@ export const ContenedorFormulari = styled.div`
   }
 
   button {
-    padding: 1rem;
+    padding: 0.3rem;
     margin: 0.2rem;
     background-color: orange;
     border: solid orange 1px;
@@ -85,5 +85,11 @@ export const Scroll = styled.div`
     background-color: orange;
     width: 20rem;
     text-align: center;
+  }
+
+  .botones {
+    display: flex;
+    flex-direction: row;
+    f
   }
 `;
