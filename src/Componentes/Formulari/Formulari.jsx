@@ -69,7 +69,7 @@ const Formulario = () => {
       orderRef,
     };
     localStorage.setItem("datos", JSON.stringify(datosLocalStorage));
-  }, [precioFinal, mostrarPanell, nPaginas, nIdiomas]);
+  }, [precioFinal, mostrarPanell, nPaginas, nIdiomas, clientName, orderRef]);
 
   const seleccionCasilla = (event) => {
     const valorCasilla = parseInt(event.target.value);
@@ -121,8 +121,21 @@ const Formulario = () => {
     guardarCheckboxes();
   });
 
-  const [budgetBook, setBudgetBook] = useState([]);
-  const [originalBudgetBook, setOriginalBudgetBook] = useState([]);
+  const [budgetBook, setBudgetBook] = useState(() => {
+    const datosGuardados = localStorage.getItem("budgetBook");
+    if (datosGuardados) {
+      return JSON.parse(datosGuardados);
+    }
+    return [];
+  });
+
+  const [originalBudgetBook, setOriginalBudgetBook] = useState(() => {
+    const datosGuardados = localStorage.getItem("originalBudgetBook");
+    if (datosGuardados) {
+      return JSON.parse(datosGuardados);
+    }
+    return [];
+  });
 
   const handleGuardarPresupuesto = () => {
     const precioTotal = precioFinal + nPaginas * nIdiomas * 30;
@@ -157,6 +170,17 @@ const Formulario = () => {
     setBudgetBook(newBudgetBook);
     setOriginalBudgetBook(newBudgetBook);
   };
+
+  useEffect(() => {
+    localStorage.setItem("budgetBook", JSON.stringify(budgetBook));
+  }, [budgetBook]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "originalBudgetBook",
+      JSON.stringify(originalBudgetBook)
+    );
+  }, [originalBudgetBook]);
 
   const [ordenAlfabetico, setOrdenAlfabetico] = useState(false);
 
